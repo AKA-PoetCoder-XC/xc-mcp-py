@@ -3,7 +3,7 @@ import httpx
 from mcp.server.fastmcp import FastMCP
 
 # 初始化 FastMCP server
-mcp = FastMCP("equipment-repair")
+mcp = FastMCP("equipment_mcp_server")
 
 # Constants
 API_PREV = "http://dev-openapi.jiayihn.com/api/open"
@@ -75,6 +75,10 @@ async def equipment_repair_submit(
     print(f"设备维修提交结果:{result}")
     return result
 
+def run():
+    mcp.run(transport='stdio')
+    print("equipment-repair server start success!")
+
 if __name__ == "__main__":
     # 初始化并运行 server
-    mcp.run(transport='stdio')
+   run()
