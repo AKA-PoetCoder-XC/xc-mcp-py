@@ -26,6 +26,39 @@ async def post_request(
             return '提交失败'
 
 @mcp.tool()
+async def get_options_by_column(
+    column_name: str
+) -> list[str]:
+    """根据字段名称获取可选的选项,当用户不知道某些字段有哪些选项时,可以使用此工具获取，
+    比如用户不知道设备大类具体有哪些选项,可以传equipmentCategory,获取设备大类的可选选项
+    Args:
+
+    column_name (str): 字段名称,
+        例如:
+            equipmentCategory (str): 设备大类
+            equipmentSubcategory (str): 设备小类
+            brandManufacturer (str): 品牌厂家
+
+    Returns:
+        list[str]: 选项列表
+
+    """
+    url = f"{API_PREV}/franchisee-equipment-maintenance/get-options-by-column"
+    params = {
+        "columnName": column_name
+    }
+    request_body = {
+        "merchantId": 100004,
+        "timeStamp": 1000000000,
+        "sign": "asdfasfsafsa",
+        "params": params
+    }
+
+    result = await post_request(url=url, request_body=request_body)
+    print(f"选项列表:{result}")
+    return result
+
+@mcp.tool()
 async def equipment_repair_submit(
     storeCode: str,
     reporterPhone: str,
